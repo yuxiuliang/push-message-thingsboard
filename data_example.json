@@ -1,0 +1,38 @@
+[
+  {
+    "temperature_sensor": {
+      "id": "temp_001",
+      "equipment_id": "TEMP_SENSOR_01",
+      "type": "temperature",
+      "data_type": "temperature",
+      "temperature": 25.6,
+      "humidity": 60.2,
+      "location": "办公室",
+      "unit": "°C"
+    }
+  },
+  {
+    "pressure_sensor": {
+      "id": "press_001", 
+      "equipment_id": "PRESS_SENSOR_01",
+      "type": "pressure",
+      "data_type": "pressure",
+      "pressure": 1013.25,
+      "altitude": 100,
+      "location": "室外",
+      "unit": "hPa"
+    }
+  },
+  {
+    "motion_detector": {
+      "id": "motion_001",
+      "equipment_id": "MOTION_DETECTOR_01", 
+      "type": "motion",
+      "data_type": "motion",
+      "motion_detected": true,
+      "confidence": 0.95,
+      "location": "入口",
+      "timestamp": 1640995200000
+    }
+  }
+]
