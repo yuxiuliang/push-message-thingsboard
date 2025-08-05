@@ -234,9 +234,13 @@ async fn send_telemetry(client: &Client, config: &Config, data: &Value) -> Resul
     // 获取当前时间的字符串格式 yyyy-MM-dd HH:mm:ss
     let send_time = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
     // 构建符合ThingsBoard API要求的遥测数据格式
+    let mut values = extract_telemetry_values(data)?;
+    // 将发送时间添加到遥测数据中
+    values.insert("send_time".to_string(), Value::String(send_time.clone()));
+
     let telemetry = TelemetryData {
         ts: timestamp,
-        values: extract_telemetry_values(data)?,
+        values,
         time: send_time,
     };
 
@@ -254,7 +258,9 @@ async fn send_telemetry(client: &Client, config: &Config, data: &Value) -> Resul
 
     // 检查响应状态并处理结果
     if response.status().is_success() {
-        println!("📤 数据发送成功: {}", serde_json::to_string(&telemetry.values)?);
+        println!("📤 数据发送成功!");
+        println!("🕒 发送时间: {}", telemetry.time);
+        println!("📊 发送数据: {}", serde_json::to_string_pretty(&telemetry.values)?);
         Ok(())
     } else {
         let status = response.status();
