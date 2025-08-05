@@ -24,6 +24,7 @@ use std::collections::HashMap;
 use std::env;
 use std::fs;
 use std::time::{SystemTime, UNIX_EPOCH};
+use chrono::Local;
 use tokio::time::{sleep, Duration};
 
 /// ThingsBoard服务器配置结构体
@@ -46,6 +47,8 @@ struct TelemetryData {
     ts: u64,
     /// 遥测数据键值对
     values: HashMap<String, Value>,
+    /// 发送时间
+    time: String,
 }
 
 /// 程序主入口函数
@@ -228,11 +231,13 @@ async fn send_telemetry(client: &Client, config: &Config, data: &Value) -> Resul
         .duration_since(UNIX_EPOCH)
         .context("无法获取系统时间")?
         .as_millis() as u64;
-
+    // 获取当前时间的字符串格式 yyyy-MM-dd HH:mm:ss
+    let send_time = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
     // 构建符合ThingsBoard API要求的遥测数据格式
     let telemetry = TelemetryData {
         ts: timestamp,
         values: extract_telemetry_values(data)?,
+        time: send_time,
     };
 
     // 构建ThingsBoard遥测数据API的请求URL
