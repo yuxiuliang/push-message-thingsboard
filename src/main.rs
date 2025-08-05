@@ -260,7 +260,7 @@ async fn send_telemetry(client: &Client, config: &Config, data: &Value) -> Resul
 
 /// 从JSON数据中提取遥测值
 ///
-/// 将嵌套的JSON结构转换为扁平的键值对，适合ThingsBoard遥测数据格式
+/// 保持原始的JSON对象结构，不展开嵌套对象
 ///
 /// # 参数
 ///
@@ -273,9 +273,8 @@ async fn send_telemetry(client: &Client, config: &Config, data: &Value) -> Resul
 /// # 数据转换规则
 ///
 /// 1. 对于嵌套对象（如{"rain": {...}}），会：
-///    - 添加"data_category"字段，值为顶层键名
-///    - 添加顶层键名作为布尔字段，值为true（便于搜索）
-///    - 展开内部对象的所有字段
+///    - 保持完整的对象结构作为值
+///    - 使用顶层键名作为字段名
 /// 2. 对于非对象值，直接使用原键值对
 ///
 /// # 错误
@@ -287,24 +286,8 @@ fn extract_telemetry_values(data: &Value) -> Result<HashMap<String, Value>> {
     match data {
         Value::Object(obj) => {
             for (key, value) in obj {
-                match value {
-                    Value::Object(inner_obj) => {
-                        // 添加数据分类字段，用于标识数据类型
-                        values.insert("data_category".to_string(), Value::String(key.clone()));
-
-                        // 添加顶层键名作为布尔字段，方便在ThingsBoard中搜索
-                        values.insert(key.clone(), Value::Bool(true));
-
-                        // 展开内部对象的所有字段，保持原始字段名
-                        for (inner_key, inner_value) in inner_obj {
-                            values.insert(inner_key.clone(), inner_value.clone());
-                        }
-                    }
-                    _ => {
-                        // 对于非对象值，直接使用原键值对
-                        values.insert(key.clone(), value.clone());
-                    }
-                }
+                // 直接使用原始的键值对，保持对象结构
+                values.insert(key.clone(), value.clone());
             }
         }
         _ => {
