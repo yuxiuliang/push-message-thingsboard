@@ -1,0 +1,146 @@
+{
+  "data": [
+    {
+      "forestPreventi": {
+        "updateUser": "阿坝州管理员",
+        "groupId": "001008001001",
+        "monitorId": "2b92ef35-71bd-4a49-98a4-7a369fb783cb",
+        "gridId": "84453f77-00c9-4d7a-a2ee-a226c03c2585",
+        "horizonAngle": 254.22,
+        "verticalAngle": -30.0,
+        "heatX": 0.0,
+        "heatY": 0.0,
+        "alarmLongitude": 102.088,
+        "alarmLatitude": 31.4912,
+        "provinceCode": "510000",
+        "provinceName": "四川省",
+        "cityCode": "513200",
+        "cityName": "阿坝",
+        "countyCode": "513226",
+        "countyName": "金川县",
+        "address": "四川省阿坝金川县马厂",
+        "alarmDatetime": "2025-06-19T08:25:18.000+0800",
+        "findType": 0,
+        "picPath1": "http://112.44.67.43:8011/group1/M00/17/5D/rBQwEGhTWRSAKOSqAAOomA8KQGU564.jpg",
+        "picPath2": "http://112.44.67.43:8011/group1/M00/17/5D/rBQwEGhTWRSABJK9AAAvIgobtYc673.jpg",
+        "videoPath1": "http://112.44.67.43:8011/group1/M00/17/5E/rBQwEGhTWTKADxneAZApJ5qPJnI432.mp4",
+        "videoPath2": "http://112.44.67.43:8011/group1/M00/17/5E/rBQwEGhTWSyAEZ0xAC90vSu4qRE588.mp4",
+        "isReal": 1,
+        "isRealAndroid": 0,
+        "isHandle": 1,
+        "handleTime": "2025-06-19 08:25:57",
+        "isDelegate": 1,
+        "type": "forestPreventi",
+        "isPut": 0,
+        "isManual": "false",
+        "streetName": "马厂",
+        "state": "ACTIVE",
+        "trueAlarmType": 3,
+        "py": 145.0,
+        "fireType": "monitor",
+        "phone": "13219859725,18783708286,18227616677,15983723777,13778699094",
+        "isEmail": 0,
+        "verticalCorrection": "0.0",
+        "px": 2219.0,
+        "pheight": 1010.0,
+        "pwidth": 2688.0,
+        "alarmType": "烟雾报警",
+        "collection_timestamp": "2025-08-08T11:21:30.058534",
+        "data_source": "forest_fire_warning_api",
+        "name_c": "金川马厂",
+        "formType": "1",
+        "equipment_id": "001008001001",
+        "unit": "ff80808195eecd1e0196dc40b265269c",
+        "affiliation": "ff80808195eecd1e0196dcd1c37d477f",
+        "administrator": "[{\"id\":\"ff80808197868edc0197aa6dfe58475d\",\"type\":3}]",
+        "app_code": "sc_ab_jcx_yjglj",
+        "form_code": "lcj_forestPreventi",
+        "openid_table_name": "icnjw_openid_jcyj",
+        "personnel_table_name": "lcj_slfh_personnel",
+        "openid": "1111111,222222",
+        "extra_fields": [
+          {
+            "phone": "13219859725",
+            "openid": "1111111",
+            "remark": "欧欧",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "欧欧",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "18783708286",
+            "openid": "222222",
+            "remark": "邓庆志",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "邓庆志",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "18227616677",
+            "remark": "李献林",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "李献林",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "15983723777",
+            "remark": "魏鹏程",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "魏鹏程",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "13778699094",
+            "remark": "夏总",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "夏总",
+            "smsStatus": "0"
+          }
+        ],
+        "lcj_slfh_personnel": [
+          {
+            "phone": "13219859725",
+            "openid": "1111111",
+            "remark": "欧欧",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "欧欧",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "18783708286",
+            "openid": "222222",
+            "remark": "邓庆志",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "邓庆志",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "18227616677",
+            "remark": "李献林",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "李献林",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "15983723777",
+            "remark": "魏鹏程",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "魏鹏程",
+            "smsStatus": "0"
+          },
+          {
+            "phone": "13778699094",
+            "remark": "夏总",
+            "parentId": "edde3d3be3e4454c9967eb92ffdb5c2d",
+            "namec": "夏总",
+            "smsStatus": "0"
+          }
+        ],
+        "workflowInstanceId": "3f7b53476f4a435eacd294fb473c867d",
+        "objectId": "be95e5957f3c4965a5278224e186ff92",
+        "result": true,
+        "data_type": "forestPreventi"
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "data": [
+    {
+      "river": {
+        "creater": "[{\"excelType\": null, \"id\": \"ff80808197868edc0197aa6dfe58475d\", \"type\": 3, \"name\": \"金川应急集成账户\", \"imgUrl\": null, \"departmentId\": \"ff80808195eecd1e0196dc40b265269c\", \"departments\": [{\"id\": \"ff80808195eecd1e0196dc40b265269c\", \"remarks\": null, \"createdTime\": \"2025-05-17 11:19:10\", \"modifiedTime\": \"2025-06-16 17:01:28\", \"deleted\": false, \"createdBy\": \"2c9280a26706a73a016706a93ccf002b\", \"modifiedBy\": null, \"extend1\": null, \"extend2\": null, \"extend3\": null, \"extend4\": null, \"extend5\": null, \"name\": \"金川县应急管理局\", \"managerId\": null, \"parentId\": \"\", \"calendarId\": null, \"sortKey\": null, \"leaf\": false, \"sourceId\": \"64_1\", \"queryCode\": \"64_1\", \"dingDeptManagerId\": null, \"parent\": null, \"children\": null, \"employees\": null, \"unitType\": 1, \"isShow\": true, \"deptType\": 2, \"corpId\": \"RELEVANCE-de917d440c3f43a29af2065d1a01c6f5\", \"enabled\": true, \"relatedOrgType\": null, \"relatedSyncType\": null, \"isCorpRootNode\": false, \"displayOption\": true, \"hasPermission\": false, \"parentDepartmentName\": null}], \"parentId\": null, \"fullDepartment\": null}]",
+        "createdDeptId": "[{\"excelType\": null, \"id\": \"ff80808195eecd1e0196dc40b265269c\", \"type\": 1, \"name\": \"金川县应急管理局\", \"imgUrl\": null, \"departmentId\": null, \"departments\": null, \"parentId\": \"\", \"fullDepartment\": null}]",
+        "id": "63ad1fcf98c84f73a8ca5640e47ccaa1",
+        "equipment_id": "60609600",
+        "unit": "ff80808195eecd1e0196dc40b265269c",
+        "affiliation": "ff80808195eecd1e0196dcd0b5d24755",
+        "administrator": "[{\"id\":\"ff80808196fb5d65019753aa159c54af\",\"type\":3}]",
+        "phone": "18515767083",
+        "type": "正常",
+        "app_code": "sc_ab_jcx_yjglj",
+        "form_code": "swj_river_ater_conditio",
+        "openid_table_name": "icnjw_openid_jcyj",
+        "personnel_table_name": "swj_zxhd_personnel",
+        "openid": "123333",
+        "form_url": "https://saas-zq.alink.link:47710/api/api/runtime/form/load?startWorkflowCode=swj_river_ater_conditio&return=/application/sc_ab_jcx_yjglj/application-list/swj_river_ater_conditio?iframeAction=add&perms=edit",
+        "swj_zxhd_personnel": [
+          {
+            "phone": "18515767083",
+            "openid": "123333",
+            "remark": "欧欧",
+            "parentId": "94409b98ac3e4786bf80dcd59cfbe97b",
+            "namec": "欧欧",
+            "smsStatus": "0"
+          }
+        ],
+        "stcd": "60609600",
+        "stnm": "绰斯甲(二)",
+        "lgtd": 101.647251,
+        "lttd": 31.808712,
+        "addvcd": "513226",
+        "origin": "水文",
+        "tm": "2025-08-08 09:00:00",
+        "rvnm": "绰斯甲河",
+        "hnnm": "大渡河",
+        "bsnm": "长江",
+        "z_sw": 2523.61,
+        "q_sw": 158.0,
+        "wptn": "平",
+        "wrz": 2526.75,
+        "grz": 2528.23,
+        "z": 2523.61,
+        "q": 158.0,
+        "stlc": "川阿坝州金川县观音桥镇麦斯卡村",
+        "sttp": "ZQ",
+        "tmstr": "2025-08-08 09:00:00",
+        "wrq": 1110.0,
+        "grq": 1600.0,
+        "obhtz": 2527.783,
+        "obmxq": 1550.0,
+        "overWrz": -3.14,
+        "overGrz": -4.62,
+        "overObhtz": -4.173,
+        "workflowInstanceId": "2205116cb18243ca8887769be53f19f2",
+        "objectId": "63ad1fcf98c84f73a8ca5640e47ccaa1",
+        "data_type": "river"
+      }
+    }
+  ]
+}

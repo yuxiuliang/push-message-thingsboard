@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "rain": {
+        "addvcd": "513226",
+        "administrator": "[{\"id\":\"ff80808196fb5d65019753aa159c54af\",\"type\":3}]",
+        "affiliation": "ff80808195eecd1e0196dcd0b5d24755",
+        "app_code": "sc_ab_jcx_yjglj",
+        "bsnm": "长江",
+        "county": "金川县",
+        "createdDeptId": "[{\"excelType\": null, \"id\": \"ff80808195eecd1e0196dc40b265269c\", \"type\": 1, \"name\": \"金川县应急管理局\", \"imgUrl\": null, \"departmentId\": null, \"departments\": null, \"parentId\": \"\", \"fullDepartment\": null}]",
+        "creater": "[{\"excelType\": null, \"id\": \"ff80808197868edc0197aa6dfe58475d\", \"type\": 3, \"name\": \"金川应急集成账户\", \"imgUrl\": null, \"departmentId\": \"ff80808195eecd1e0196dc40b265269c\", \"departments\": [{\"id\": \"ff80808195eecd1e0196dc40b265269c\", \"remarks\": null, \"createdTime\": \"2025-05-17 11:19:10\", \"modifiedTime\": \"2025-06-16 17:01:28\", \"deleted\": false, \"createdBy\": \"2c9280a26706a73a016706a93ccf002b\", \"modifiedBy\": null, \"extend1\": null, \"extend2\": null, \"extend3\": null, \"extend4\": null, \"extend5\": null, \"name\": \"金川县应急管理局\", \"managerId\": null, \"parentId\": \"\", \"calendarId\": null, \"sortKey\": null, \"leaf\": false, \"sourceId\": \"64_1\", \"queryCode\": \"64_1\", \"dingDeptManagerId\": null, \"parent\": null, \"children\": null, \"employees\": null, \"unitType\": 1, \"isShow\": true, \"deptType\": 2, \"corpId\": \"RELEVANCE-de917d440c3f43a29af2065d1a01c6f5\", \"enabled\": true, \"relatedOrgType\": null, \"relatedSyncType\": null, \"isCorpRootNode\": false, \"displayOption\": true, \"hasPermission\": false, \"parentDepartmentName\": null}], \"parentId\": null, \"fullDepartment\": null}]",
+        "data_type": "rain",
+        "drp": 15,
+        "equipment_id": "S8481",
+        "form_code": "swj_regimen",
+        "form_url": "https://saas-zq.alink.link:47710/api/api/runtime/form/load?startWorkflowCode=swj_regimen&return=/application/sc_ab_jcx_yjglj/application-list/swj_regimen?iframeAction=add&perms=edit",
+        "hnnm": "大渡河",
+        "id": "8db7ef6aa949440a8f0d307d11d41be9",
+        "lgtd": 102.06,
+        "lttd": 31.52,
+        "objectId": "8db7ef6aa949440a8f0d307d11d41be9",
+        "openid": "123333",
+        "openid_table_name": "icnjw_openid_jcyj",
+        "origin": "气象",
+        "personnel_table_name": "swj_zxjy_personnel",
+        "phone": "18515767083",
+        "rain_level": "no_rain",
+        "rvnm": "大金川",
+        "stcd": "S8481",
+        "stlc": "阿坝藏族羌族自治州金川",
+        "stnm": "金川沙尔",
+        "sttp": "MM",
+        "swj_zxjy_personnel": [
+          {
+            "namec": "欧欧",
+            "openid": "123333",
+            "parentId": "38340b75efbc4c36a67aa4940bba78e4",
+            "phone": "18515767083",
+            "remark": "欧欧",
+            "smsStatus": "0"
+          }
+        ],
+        "type": "rain",
+        "unit": "ff80808195eecd1e0196dc40b265269c",
+        "workflowInstanceId": "553697dbbdaa431ab074e2cfae31d852"
+      }
+    }
+  ]
+}

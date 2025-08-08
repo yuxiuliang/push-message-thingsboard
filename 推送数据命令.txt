@@ -1,0 +1,10 @@
+地震
+ .\target\release\push-message-thingsboard.exe --file .\earthquake-1.json --interval 2 --count 1
+地质灾害
+ .\target\release\push-message-thingsboard.exe --file .\geology-disaster-warning-1.json --interval 2 --count 1
+林草据森林防火
+ .\target\release\push-message-thingsboard.exe --file .\forest-fire-warning-1.json --interval 2 --count 1
+河流
+ .\target\release\push-message-thingsboard.exe --file .\river-warning-1.json --interval 2 --count 1
+雨量雨情
+ .\target\release\push-message-thingsboard.exe --file .\rain-warning-1.json --interval 2 --count 1

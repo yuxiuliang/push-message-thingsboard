@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "geologyDisaster": {
+        "areaCode": "513226",
+        "city": "阿坝州",
+        "county": "金川县",
+        "warningEventId": "DAC3A5013CEA4E94A674141A9596E84A",
+        "hiddenPoint": "513226030152",
+        "hiddenPointName": "河西乡热登村冯家沟泥石流",
+        "warningTime": "2025-03-16 16:58:24",
+        "warningLatestTime": "2025-03-17 05:21:52",
+        "warningEndTime": "2025-03-18 05:21:56",
+        "warningCode": "C1",
+        "warningEventStatus": 1,
+        "firstProject": "四川省群专结合监测预警项目",
+        "secondProject": "省2022批次（省3000处点）",
+        "blockProject": "四川省阿坝州金川县2022 年度地质灾害普适型监测预警项目",
+        "sensorPublicId": "513226030152L4NW01",
+        "sensorId": "5132260301520201NW01",
+        "warningSensorType": "L4NW",
+        "warningLevel": "蓝色预警",
+        "lon": 102.0820278,
+        "lat": 31.4512917,
+        "cityDb": 0,
+        "countyDb": 0,
+        "isSend": 1,
+        "cjdw": "中冶成都勘察研究总院有限公司",
+        "warningEventStatus_dictText": "自动关闭",
+        "data_source": "api",
+        "collection_method": "hybrid",
+        "api_timestamp": "2025-08-08T09:41:30.138958",
+        "upload_result": {
+          "errcode": 0,
+          "errmsg": "流程发起成功",
+          "data": {
+            "result": true,
+            "workflowInstanceId": "d5824152d9364dacbbe7462759f85cd4",
+            "objectId": "ca0e1d24acf94081b124bb97767c6d0b"
+          },
+          "traceId": "1BC0A4F234D24DDDBDE23A08A4728F26"
+        },
+        "workflowInstanceId": "d5824152d9364dacbbe7462759f85cd4",
+        "objectId": "ca0e1d24acf94081b124bb97767c6d0b",
+        "type": "geologyDisaster",
+        "data_type": "geologyDisaster"
+      }
+    }
+  ]
+}

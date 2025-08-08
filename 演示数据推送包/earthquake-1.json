@@ -1,0 +1,135 @@
+{
+  "data": [
+    {
+      "earthquake": {
+        "administrator": "[{\"id\":\"ff80808197868edc0197aa6dfe58475d\",\"type\":3}]",
+        "affiliation": "ff80808195eecd1e0196dcdcfd7b487c",
+        "app_code": "sc_ab_jcx_yjglj",
+        "checkCode": "",
+        "data_source": "earthquake_warning_api",
+        "data_type": "earthquake",
+        "dzj_dzyj_personnel": [
+          {
+            "namec": "欧欧",
+            "openid": "2219878787",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "13219859725",
+            "remark": "欧欧",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "欧欧",
+            "openid": "1233333",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "18515767083",
+            "remark": "欧欧",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "李献林",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "18227616677",
+            "remark": "李献林",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "魏鹏程局长",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "15983723777",
+            "remark": "魏鹏程局长",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "夏总",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "13778699094",
+            "remark": "夏总",
+            "smsStatus": "0"
+          }
+        ],
+        "earlyWarningLevel": "orange",
+        "earlyWarningLevelName": "橙色预警",
+        "epiIntensity": 6.5,
+        "epiLat": 28.268,
+        "epiLon": 104.857,
+        "equipment_id": "EEW/JSON/SC",
+        "eventId": "202506151837.0001",
+        "extra_fields": [
+          {
+            "namec": "欧欧",
+            "openid": "2219878787",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "13219859725",
+            "remark": "欧欧",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "欧欧",
+            "openid": "1233333",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "18515767083",
+            "remark": "欧欧",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "李献林",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "18227616677",
+            "remark": "李献林",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "魏鹏程局长",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "15983723777",
+            "remark": "魏鹏程局长",
+            "smsStatus": "0"
+          },
+          {
+            "namec": "夏总",
+            "parentId": "e57597e5d1804206ab874217c0469b58",
+            "phone": "13778699094",
+            "remark": "夏总",
+            "smsStatus": "0"
+          }
+        ],
+        "focdepth": 10,
+        "form_code": "dzj_earthquake",
+        "id": "1ec729569a5a40c49a8f50626f5bd35e",
+        "isLatestData": 1,
+        "isSatisfyPublishStrategy": 1,
+        "isSatisfyPublishStrategyName": "已发布",
+        "isSatisfyPublishStrategyReason": "满足策略",
+        "locname": "四川成都市",
+        "magnitude": 4.7,
+        "msgId": "202506151837.0001_2",
+        "msgSource": "CB",
+        "msgType": "0101",
+        "msgTypeName": "正式",
+        "objectId": "1ec729569a5a40c49a8f50626f5bd35e",
+        "openid": "2219878787,1233333",
+        "openid_table_name": "icnjw_openid_jcyj",
+        "oritime": 1749983867800,
+        "parentScopeTopic": "EEW/JSON/SC",
+        "parentScopeTopicTypeName": "正式",
+        "personnel_table_name": "dzj_dzyj_personnel",
+        "phone": "13219859725,18515767083,18227616677,15983723777,13778699094",
+        "processed_timestamp": "2025-08-04T18:13:37.104470",
+        "producer": "DEGAL",
+        "publishTime": 1749983879843,
+        "receiver": "",
+        "result": true,
+        "sendTime": 1749983874901,
+        "serialNumber": 1,
+        "serialNumberName": "第1报",
+        "type": "earthquake",
+        "unit": "ff80808195eecd1e0196dc40b265269c",
+        "updateTime": 1749983880000,
+        "version": "1.0",
+        "warning_id": 48,
+        "warning_time": 1749983874917,
+        "workflowInstanceId": "3a7c312dfaa2408e9618b04f3b7b91b0"
+      }
+    }
+  ]
+}

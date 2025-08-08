@@ -2,3 +2,10 @@ target/
 data.json
 .env
 test_data.json
+演示数据推送包.zip
+river-warning-1.json
+rain-warning-1.json
+geology-disaster-warning-1.json
+forest-fire-warning-1.json
+earthquake-4.json
+earthquake-1.json
