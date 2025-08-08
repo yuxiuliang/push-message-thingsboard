@@ -1,0 +1,298 @@
+{
+  "ruleChain": {
+    "name": "雨情规则链",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null,
+    "additionalInfo": {
+      "description": "雨情规则链"
+    }
+  },
+  "metadata": {
+    "version": 134,
+    "firstNodeIndex": 1,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
+        "name": "Message Type Switch",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "version": 0
+        },
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 590,
+          "layoutY": 39
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.profile.TbDeviceProfileNode",
+        "name": "Device Profile Node",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "persistAlarmRulesState": false,
+          "fetchAlarmRulesStateOnStart": false
+        },
+        "additionalInfo": {
+          "description": "Process incoming messages from devices with the alarm rules defined in the device profile. Dispatch all incoming messages with \"Success\" relation type.",
+          "layoutX": 263,
+          "layoutY": 38
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "雨情数据处理",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "// 安全获取drp字段值\r\nvar rainfallValue = 0;\r\nif (msg.rain && msg.rain.drp != null) {\r\n    rainfallValue = parseFloat(msg.rain.drp) || 0;\r\n}\r\n\r\n// 数据验证\r\nif (isNaN(rainfallValue) || !isFinite(rainfallValue)) {\r\n    rainfallValue = 0;\r\n}\r\n\r\n// 输出到消息\r\nmsg.rainfall_cumulative = rainfallValue;\r\nreturn {msg:msg,metadata:metadata,msgType:msgType};",
+          "tbelScript": ""
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 523,
+          "layoutY": 355
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "判断是否是雨情数据",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var isRainData = msg.rain && \n                 typeof msg.rain === 'object' && \n                 'drp' in msg.rain && \n                 msg.rain.drp != null;\nreturn !!isRainData; // 确保返回布尔值",
+          "tbelScript": ""
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 292,
+          "layoutY": 146
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "雨情数据增量计算",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "// 1. 获取基本信息\r\nvar currentTs = metadata.ts ? parseInt(metadata.ts, 10) : Date.now();\r\nvar currentValue = parseFloat(msg.rainfall_cumulative);\r\nif (isNaN(currentValue)) {\r\n    currentValue = 0;\r\n}\r\n\r\n// 2. 获取历史数据列表 (从共享属性)\r\nvar historyList = [];\r\ntry {\r\n    // 假设存储的是 JSON 字符串\r\n    if (metadata.shared_rainfall_history) {\r\n        historyList = JSON.parse(metadata.shared_rainfall_history);\r\n        if (!Array.isArray(historyList)) {\r\n            historyList = [];\r\n        }\r\n    }\r\n} catch (e) {\r\n    historyList = []; // 解析失败则重置\r\n}\r\n\r\n// 3. 定义查找函数\r\nfunction findValueForTimeWindow(history, currentTimeMs, windowMinutes) {\r\n    var targetTimeMs = currentTimeMs - (windowMinutes * 60 * 1000);\r\n    var closestEntry = null;\r\n    var minDiff = Infinity;\r\n\r\n    for (var i = 0; i < history.length; i++) {\r\n        var entry = history[i];\r\n        if (entry && typeof entry.ts === 'number' && typeof entry.value === 'number') {\r\n            var diff = Math.abs(entry.ts - targetTimeMs);\r\n            if (diff < minDiff) {\r\n                minDiff = diff;\r\n                closestEntry = entry;\r\n            }\r\n        }\r\n    }\r\n\r\n    if (closestEntry) {\r\n        return closestEntry.value;\r\n    } else {\r\n        return null;\r\n    }\r\n}\r\n\r\n// 4. 计算各时间窗口的增量\r\nvar delta_1h = null;\r\nvar delta_3h = null;\r\nvar delta_6h = null;\r\nvar delta_12h = null;\r\n\r\nvar single_step = 0; // 默认为0\r\nif (historyList.length >= 1) {\r\n    // 假设 historyList 是按时间倒序排列的（最新的在前）\r\n    // 当前值 currentValue 减去上一个记录的值\r\n    var previousValue = parseFloat(historyList[0].value) || 0; // 获取上一次的累计值\r\n    single_step = Math.max(0, currentValue - previousValue); // 确保增量非负\r\n}\r\nvar value_1h_ago = findValueForTimeWindow(historyList, currentTs, 60);\r\nvar value_3h_ago = findValueForTimeWindow(historyList, currentTs, 180);\r\nvar value_6h_ago = findValueForTimeWindow(historyList, currentTs, 360);\r\nvar value_12h_ago = findValueForTimeWindow(historyList, currentTs, 720);\r\n\r\nif (value_1h_ago !== null) {\r\n    delta_1h = Math.max(0, currentValue - value_1h_ago);\r\n}\r\nif (value_3h_ago !== null) {\r\n    delta_3h = Math.max(0, currentValue - value_3h_ago);\r\n}\r\nif (value_6h_ago !== null) {\r\n    delta_6h = Math.max(0, currentValue - value_6h_ago);\r\n}\r\nif (value_12h_ago !== null) {\r\n    delta_12h = Math.max(0, currentValue - value_12h_ago);\r\n}\r\n\r\n// 5. 更新历史数据列表\r\nvar newEntry = {\r\n    \"ts\": currentTs,\r\n    \"value\": currentValue\r\n};\r\n// 将新条目添加到列表开头 (最近的在前)\r\nhistoryList.unshift(newEntry);\r\n\r\n// 6. 限制历史列表长度\r\nvar MAX_HISTORY_LENGTH = 2000;\r\nif (historyList.length > MAX_HISTORY_LENGTH) {\r\n    // 移除末尾多余的条目\r\n    historyList = historyList.slice(0, MAX_HISTORY_LENGTH);\r\n}\r\n\r\n// 7. 将计算结果和更新后的历史列表添加到 msg 中\r\nmsg.rainfall_deltas = {\r\n    \"delta_1h\": delta_1h,\r\n    \"delta_3h\": delta_3h,\r\n    \"delta_6h\": delta_6h,\r\n    \"delta_12h\": delta_12h,\r\n    \"single_step\": single_step\r\n};\r\n\r\n// 8. 准备更新共享属性 (存储历史列表)\r\n// 注意：共享属性值通常是字符串，需要将数组序列化为 JSON 字符串\r\nmsg.shared = {\r\n    \"rainfall_history\": JSON.stringify(historyList)\r\n};\r\n\r\nreturn {msg: msg, metadata: metadata, msgType: msgType}; // 使用完整返回格式",
+          "tbelScript": ""
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 217,
+          "layoutY": 602
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "雨情预警判断",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "// 1. 获取计算好的各时间窗口增量和当前累计量\r\n// 假设 \"雨情数据增量计算\" 节点已经将结果放入 msg.rainfall_deltas\r\nvar deltas = msg.rainfall_deltas || {};\r\nvar cumul = parseFloat(msg.rainfall_cumulative) || 0;\r\n\r\n// 正确地从 deltas 对象中获取各个时间窗口的增量\r\n// 并使用一致的变量名\r\nvar d1h = null; // 1小时增量\r\nvar d3h = null; // 3小时增量\r\nvar d6h = null; // 6小时增量\r\nvar d12h = null; // 12小时增量\r\n\r\n// 从 msg.rainfall_deltas 中安全地提取值\r\nif (deltas.hasOwnProperty('delta_1h') && deltas.delta_1h !== null) {\r\n    d1h = deltas.delta_1h;\r\n}\r\nif (deltas.hasOwnProperty('delta_3h') && deltas.delta_3h !== null) {\r\n    d3h = deltas.delta_3h;\r\n}\r\nif (deltas.hasOwnProperty('delta_6h') && deltas.delta_6h !== null) {\r\n    d6h = deltas.delta_6h;\r\n}\r\nif (deltas.hasOwnProperty('delta_12h') && deltas.delta_12h !== null) {\r\n    d12h = deltas.delta_12h;\r\n}\r\n\r\n// 如果你还需要单步增量来判断\"持续性\"，也从 deltas 或 msg 中获取\r\n// 例如，假设 \"雨情数据增量计算\" 节点也计算了单步增量并放在 deltas.single_step\r\nvar singleStepDelta = 0; // 单次上报增量\r\nif (deltas.hasOwnProperty('single_step')) {\r\n     singleStepDelta = parseFloat(deltas.single_step) || 0;\r\n}\r\n\r\n\r\n\r\nvar warningLevel = \"normal\";\r\nvar warningMessage = \"无预警\";\r\n\r\n// 2. 预警判断逻辑 (严格按照需求)\r\n// 注意: 使用了正确的变量名 d1h, d3h 等\r\n\r\n// 红色预警 (优先级最高)\r\nif (d3h !== null && d3h >= 100) {\r\n    warningLevel = \"red\";\r\n    warningMessage = \"红色预警：3小时内降雨量将达100毫米以上\";\r\n} else if (cumul >= 100 && singleStepDelta > 0) { // 使用 singleStepDelta 判断持续性\r\n     warningLevel = \"red\";\r\n     warningMessage = \"红色预警：降雨量已达100毫米以上且降雨可能持续\";\r\n}\r\n\r\n// 橙色预警\r\nelse if (d3h !== null && d3h >= 50) {\r\n    warningLevel = \"orange\";\r\n    warningMessage = \"橙色预警：3小时内降雨量将达50毫米以上\";\r\n} else if (d1h !== null && d1h >= 30) { // 修正：使用 d1h\r\n    warningLevel = \"orange\";\r\n    warningMessage = \"橙色预警：1小时内降雨量将达30毫米以上\";\r\n} else if (cumul >= 50 && singleStepDelta > 0) { // 使用 singleStepDelta 判断持续性\r\n     warningLevel = \"orange\";\r\n     warningMessage = \"橙色预警：降雨量已达50毫米以上且降雨可能持续\";\r\n}\r\n\r\n// 黄色预警\r\nelse if (d6h !== null && d6h >= 50) {\r\n    warningLevel = \"yellow\";\r\n    warningMessage = \"黄色预警：6小时内降雨量将达50毫米以上\";\r\n} else if (cumul >= 50 && singleStepDelta > 0) { // 使用 singleStepDelta 判断持续性\r\n     warningLevel = \"yellow\";\r\n     warningMessage = \"黄色预警：降雨量已达50毫米以上且降雨可能持续\";\r\n}\r\n\r\n// 蓝色预警\r\nelse if (d12h !== null && d12h >= 25) {\r\n    warningLevel = \"blue\";\r\n    warningMessage = \"蓝色预警：12小时内降雨量将达25毫米以上\";\r\n} else if (cumul >= 40 && singleStepDelta > 0) { // 使用 singleStepDelta 判断持续性\r\n     warningLevel = \"blue\";\r\n     warningMessage = \"蓝色预警：降雨量已达40毫米以上且降雨可能持续\";\r\n}\r\n\r\n// 3. 输出预警信息\r\nmsg.warning_level = warningLevel;\r\nmsg.warning_message = warningMessage;\r\nmsg.warning_details = {\r\n    \"level\": warningLevel,\r\n    \"message\": warningMessage,\r\n    \"cumulative\": cumul,\r\n    \"deltas\": {\r\n        \"delta_1h\": d1h,\r\n        \"delta_3h\": d3h,\r\n        \"delta_6h\": d6h,\r\n        \"delta_12h\": d12h,\r\n        \"single_step\": singleStepDelta\r\n    },\r\n    \"timestamp\": new Date().toISOString()\r\n};\r\n\r\n\r\n// 确保返回正确的格式\r\nreturn {msg: msg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 512,
+          "layoutY": 604
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "保存雨情遥测数据",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "defaultTTL": 0,
+          "skipLatestPersistence": false,
+          "useServerTs": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1186,
+          "layoutY": 465
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
+        "name": "保存雨情的属性数据",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 2,
+        "configuration": {
+          "scope": "SHARED_SCOPE",
+          "notifyDevice": false,
+          "sendAttributesUpdatedNotification": false,
+          "updateAttributesOnlyOnValueChange": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1175,
+          "layoutY": 596
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "消息转换",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "msgType = \"POST_ATTRIBUTES_REQUEST\"; \nmsg.rainfall_history = msg.shared.rainfall_history;\nreturn {msg: msg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 840,
+          "layoutY": 597
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "获取上次累计雨量",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": false,
+          "fetchTo": "METADATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [
+            "rainfall_history"
+          ],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 33,
+          "layoutY": 295
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
+        "name": "保存属性数据",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 2,
+        "configuration": {
+          "scope": "SHARED_SCOPE",
+          "notifyDevice": false,
+          "sendAttributesUpdatedNotification": false,
+          "updateAttributesOnlyOnValueChange": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 937,
+          "layoutY": 84
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "保存遥测数据",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "defaultTTL": 0,
+          "skipLatestPersistence": false,
+          "useServerTs": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 940,
+          "layoutY": 156
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 3,
+        "type": "Post telemetry"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 10,
+        "type": "Post attributes"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 11,
+        "type": "Post telemetry"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 4,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}
